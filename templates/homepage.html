@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecommerce</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dev/css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    
+  </head>
+  <body>
+    <div class="container" style="margin-top:40px;">
+      <div id="products" class="row list-group">
+        {% for product in products %}
+          <div class="item  col-xs-4 col-lg-4">
+              <div class="thumbnail">
+                  <div class="caption">
+                      <h3 class="group inner list-group-item-heading">
+                        {{ product.name | capfirst }}</h3>
+                      <p class="group inner list-group-item-text">
+                        {{ product.description }}</p>
+                      <div class="row">
+                          <div class="col-xs-12 col-md-6">
+                              <p class="lead">
+                                  ${{ product.get_display_price }}</p>
+                          </div>
+                          <div class="col-xs-12 col-md-6">
+                              <a class="btn btn-success" href="javascript:void(0);" data-index="{{ product.id }}" onclick="buy_products(this);">Buy Now</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+   
+  </body>
+  <script type="text/javascript"> 
+    var public_key = "{{STRIPE_PUBLIC_KEY}}";
+ </script>
+  <script type="text/javascript" src="{% static 'dev/js/payments.js' %}"></script>
+</html>
